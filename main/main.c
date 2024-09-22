@@ -6,6 +6,8 @@
 #include "esp_timer.h"
 #include "lvgl_src/sample.h"
 #include "touch_ft6236.h"
+#include "send_receive_proc_x.h"
+#include "process_x.h"
 
 #define LCD_H_RES 320
 #define LCD_V_RES 240
@@ -37,6 +39,8 @@ static void lvgl_tick(void *arg)
 
 void app_main(void)
 {
+    process_x();
+
     init_touch();
 
     esp_lcd_panel_handle_t *panel_handle = init_display();
@@ -72,7 +76,8 @@ void app_main(void)
 
     lv_indev_set_cursor(pointer, icon);
 
-    lvgl_sample();
+    // lvgl_sample();
+    process_x_ui();
 
     while (true)
     {

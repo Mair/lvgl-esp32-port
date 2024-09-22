@@ -14,5 +14,9 @@
   "idf.portWin": "COM9",
   "idf.pythonBinPathWin": "c:\\esp\\v5.3\\tools\\python_env\\idf5.3_py3.11_env\\Scripts\\python.exe",
   "idf.toolsPathWin": "c:\\esp\\v5.3\\tools",
-  "cSpell.words": ["lvgl"]
+  "cSpell.words": ["lvgl"],
+  "files.associations": {
+    "*.gotmpl": "go-template",
+    "process_x.h": "c"
+  }
 }

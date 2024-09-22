@@ -3,6 +3,8 @@ SRCS
     "main.c"
     "tft_display.c"
     "lvgl_src/sample.c"
+    "lvgl_src/send_receive_proc_x.c"
+    "process_x.c"
     "touch_ft6236.c"
 INCLUDE_DIRS 
     "."
