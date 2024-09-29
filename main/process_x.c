@@ -6,10 +6,16 @@
 #include "process_x.h"
 
 static QueueHandle_t receive_payload_queue;
+static QueueHandle_t send_payload_queue;
 ///////////////External task////////////////
 void receive_from_process_x(receive_payload_t *payload)
 {
     xQueueReceive(receive_payload_queue, payload, 0);
+}
+
+void send_to_process_x(send_payload_t *payload)
+{
+    xQueueSend(send_payload_queue, payload, 0);
 }
 ////////////////////////////////
 
@@ -22,6 +28,7 @@ void process_x_task(void *params)
 {
     receive_payload_queue = xQueueCreate(10, sizeof(receive_payload_t));
     receive_payload_t receive_payload = {};
+
     while (1)
     {
         receive_payload.value = read_value_of_x();
@@ -30,7 +37,20 @@ void process_x_task(void *params)
     }
 }
 
+void process_y_task(void *params)
+{
+    send_payload_queue = xQueueCreate(10, sizeof(send_payload_t));
+    send_payload_t send_payload = {};
+
+    while (1)
+    {
+        xQueueReceive(send_payload_queue, &send_payload, portMAX_DELAY);
+        printf("received a value of %d\n", send_payload.value);
+    }
+}
+
 void process_x(void)
 {
     xTaskCreate(process_x_task, "process_x_task", 1024 * 4, NULL, 5, NULL);
+    xTaskCreate(process_y_task, "process_y_task", 1024 * 4, NULL, 5, NULL);
 }
